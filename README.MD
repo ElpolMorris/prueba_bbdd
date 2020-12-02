@@ -10,4 +10,3 @@
 >diccionario.txt
     *Archivo de texto que contiene diccionario la base de datos prueba
 
-
