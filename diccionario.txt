@@ -1,23 +1,24 @@
    tabla_nombre    | columna_nombre | position | nulo |     tipo_dato     | longitud | defecto
 -------------------+----------------+----------+------+-------------------+----------+---------
+ categorias        | descripcion    |        3 | YES  | character varying |      100 |
  categorias        | id             |        1 | NO   | smallint          |       16 |
  categorias        | nombre         |        2 | NO   | character varying |       50 |
- categorias        | descripcion    |        3 | YES  | character varying |      100 |
- clientes          | id             |        1 | NO   | integer           |       32 |
  clientes          | nombre         |        2 | NO   | character varying |       80 |
- clientes          | rut            |        3 | YES  | character varying |       10 |
+ clientes          | id             |        1 | NO   | integer           |       32 |
  clientes          | direccion      |        4 | YES  | character varying |      100 |
- factura           | fecha          |        2 | NO   | date              |          |
- factura           | num_fact       |        1 | NO   | integer           |       32 |
- factura           | subtotal       |        4 | YES  | integer           |       32 | 0
+ clientes          | rut            |        3 | YES  | character varying |       10 |
  factura           | precio_total   |        5 | YES  | double precision  |       53 | 0
+ factura           | fecha          |        2 | NO   | date              |          |
+ factura           | iva            |        6 | YES  | double precision  |       53 | 0
+ factura           | subtotal       |        4 | YES  | integer           |       32 | 0
+ factura           | num_fact       |        1 | NO   | integer           |       32 |
  factura           | id_cliente     |        3 | YES  | smallint          |       16 |
  listado_productos | id_fact        |        4 | YES  | integer           |       32 |
- listado_productos | cantidad       |        2 | NO   | smallint          |       16 |
- listado_productos | id_prod        |        3 | YES  | smallint          |       16 |
  listado_productos | cod_detalle    |        1 | YES  | smallint          |       16 |
- productos         | valor_unitario |        4 | NO   | integer           |       32 |
+ listado_productos | id_prod        |        3 | YES  | smallint          |       16 |
+ listado_productos | cantidad       |        2 | NO   | smallint          |       16 |
  productos         | id_cat         |        5 | YES  | smallint          |       16 |
- productos         | descripcion    |        3 | YES  | character varying |      100 |
- productos         | nombre         |        2 | YES  | character varying |       50 |
  productos         | id             |        1 | NO   | integer           |       32 |
+ productos         | valor_unitario |        4 | NO   | integer           |       32 |
+ productos         | nombre         |        2 | YES  | character varying |       50 |
+ productos         | descripcion    |        3 | YES  | character varying |      100 |

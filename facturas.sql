@@ -3,7 +3,7 @@ create database prueba;
 create table clientes (id int primary key, nombre varchar(80) not null, rut varchar(10), direccion varchar(100));
 create table categorias (id smallint primary key, nombre varchar(50) not null, descripcion varchar(100));
 create table productos (id int primary key, nombre varchar(50), descripcion varchar(100), valor_unitario int not null, id_cat smallint references categorias(id));
-create table factura (num_fact int primary key, fecha date not null, id_cliente smallint references clientes(id), subtotal int default 0, precio_total float8 default 0);
+create table factura (num_fact int primary key, fecha date not null, id_cliente smallint references clientes(id), subtotal int default 0, precio_total float8 default 0, iva float8 default 0);
 create table listado_productos (cod_detalle smallint, cantidad smallint not null, id_prod smallint references productos(id), id_fact int references factura(num_fact));
 -- agregar registros a tablas
 -- agregar 5 clientes
@@ -28,6 +28,7 @@ insert into factura (num_fact, fecha, id_cliente) values (1, '2020-06-01', 1);
 insert into listado_productos (cod_detalle, cantidad, id_prod, id_fact) values (1,1,7,1);
 insert into listado_productos (cod_detalle, cantidad, id_prod, id_fact) values (2,1,8,1);
 update factura set subtotal = valor_bruto.subtotal from (select sum(x.cantidad * y.valor_unitario) as subtotal  from listado_productos as x inner join productos as y on x.id_prod = y.id where x.id_fact = 1) as valor_bruto where num_fact = 1;
+update factura set iva = round(subtotal * 0.19);
 update factura set precio_total = round(subtotal * 1.19);
 commit;
 
@@ -37,6 +38,7 @@ insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (1
 insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (2,1,4,2);
 insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (3,1,5,2);
 update factura set subtotal = valor_bruto.subtotal from (select sum(x.cantidad * y.valor_unitario) as subtotal  from listado_productos as x inner join productos as y on x.id_prod = y.id where x.id_fact = 2) as valor_bruto where num_fact = 2;
+update factura set iva = round(subtotal * 0.19);
 update factura set precio_total = round(subtotal * 1.19);
 commit;
 --3 facturas cliente #2
@@ -46,6 +48,7 @@ insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (1
 insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (2,2,2,3);
 insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (3,1,1,3);
 update factura set subtotal = valor_bruto.subtotal from (select sum(x.cantidad * y.valor_unitario) as subtotal  from listado_productos as x inner join productos as y on x.id_prod = y.id where x.id_fact = 3) as valor_bruto where num_fact = 3;
+update factura set iva = round(subtotal * 0.19);
 update factura set precio_total = round(subtotal * 1.19);
 commit;
 
@@ -54,6 +57,7 @@ insert into factura (num_fact, fecha, id_cliente) values (4, '2020-07-15',2);
 insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (1,2,6,4);
 insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (2,2,7,4);
 update factura set subtotal = valor_bruto.subtotal from (select sum(x.cantidad * y.valor_unitario) as subtotal  from listado_productos as x inner join productos as y on x.id_prod = y.id where x.id_fact = 4) as valor_bruto where num_fact = 4;
+update factura set iva = round(subtotal * 0.19);
 update factura set precio_total = round(subtotal * 1.19);
 commit;
 
@@ -63,6 +67,7 @@ insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (1
 insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (2,1,4,5);
 insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (3,2,3,5);
 update factura set subtotal = valor_bruto.subtotal from (select sum(x.cantidad * y.valor_unitario) as subtotal  from listado_productos as x inner join productos as y on x.id_prod = y.id where x.id_fact = 5) as valor_bruto where num_fact = 5;
+update factura set iva = round(subtotal * 0.19);
 update factura set precio_total = round(subtotal * 1.19);
 commit;
 --1 factura cliente #3
@@ -70,6 +75,7 @@ begin;
 insert into factura (num_fact, fecha, id_cliente) values (6, '2020-08-14',3);
 insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (1,1,6,6);
 update factura set subtotal = valor_bruto.subtotal from (select sum(x.cantidad * y.valor_unitario) as subtotal  from listado_productos as x inner join productos as y on x.id_prod = y.id where x.id_fact = 6) as valor_bruto where num_fact = 6;
+update factura set iva = round(subtotal * 0.19);
 update factura set precio_total = round(subtotal * 1.19);
 commit;
 --4 facturas cliente #4
@@ -78,6 +84,7 @@ insert into factura (num_fact, fecha, id_cliente) values (7, '2020-09-11',4);
 insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (1,1,1,7);
 insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (2,4,2,7);
 update factura set subtotal = valor_bruto.subtotal from (select sum(x.cantidad * y.valor_unitario) as subtotal  from listado_productos as x inner join productos as y on x.id_prod = y.id where x.id_fact = 7) as valor_bruto where num_fact = 7;
+update factura set iva = round(subtotal * 0.19);
 update factura set precio_total = round(subtotal * 1.19);
 commit;
 
@@ -87,6 +94,7 @@ insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (1
 insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (2,1,6,8);
 insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (3,2,5,8);
 update factura set subtotal = valor_bruto.subtotal from (select sum(x.cantidad * y.valor_unitario) as subtotal  from listado_productos as x inner join productos as y on x.id_prod = y.id where x.id_fact = 8) as valor_bruto where num_fact = 8;
+update factura set iva = round(subtotal * 0.19);
 update factura set precio_total = round(subtotal * 1.19);
 commit;
 
@@ -97,6 +105,7 @@ insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (2
 insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (3,3,8,9);
 insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (4,5,1,9);
 update factura set subtotal = valor_bruto.subtotal from (select sum(x.cantidad * y.valor_unitario) as subtotal  from listado_productos as x inner join productos as y on x.id_prod = y.id where x.id_fact = 9) as valor_bruto where num_fact = 9;
+update factura set iva = round(subtotal * 0.19);
 update factura set precio_total = round(subtotal * 1.19);
 commit;
 
@@ -104,6 +113,7 @@ begin;
 insert into factura (num_fact, fecha, id_cliente) values (10, '2020-11-30',4);
 insert into listado_productos(cod_detalle, cantidad, id_prod, id_fact) values (1,3,2,10);
 update factura set subtotal = valor_bruto.subtotal from (select sum(x.cantidad * y.valor_unitario) as subtotal  from listado_productos as x inner join productos as y on x.id_prod = y.id where x.id_fact = 10) as valor_bruto where num_fact = 10;
+update factura set iva = round(subtotal * 0.19);
 update factura set precio_total = round(subtotal * 1.19);
 commit;
 
@@ -129,8 +139,6 @@ t1.TABLE_NAME;
 select id_cliente, precio_total from factura where precio_total = (select max(precio_total) from factura);
 
 -- ¿Qué cliente pagó sobre 100 de monto?
-select id_cliente from factura where precio_total > 100 group by id_cliente;
+select id_cliente from factura where precio_total > 1000000 group by id_cliente;
 --cantidad de clientes que compraron producto 6 
 select count(distinct id_cliente) from factura where num_fact in ( select id_fact from listado_productos where id_prod = 6);
-
--- falta diccionario ok - exportar base de datos ok - preguntas 8 y 9 ok
